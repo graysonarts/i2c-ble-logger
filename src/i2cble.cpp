@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "BLESerial.h"
 #include "I2CListener.h"
 #include "I2CFormatter.h"
