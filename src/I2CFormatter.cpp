@@ -15,7 +15,7 @@ String I2CFormatter::formatTransaction(const I2CTransaction& transaction, I2CFor
         if (transaction.hasError) {
             output += "ERROR";
         } else {
-            output += transaction.isRead ? "READ: " : "WRITE: ";
+            output += transaction.isRead ? "R: " : "W: ";
             appendDataToString(output, transaction, kind);
         }
 
