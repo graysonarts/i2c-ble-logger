@@ -1,6 +1,7 @@
 #include "BLESerial.h"
 #include "I2CListener.h"
 #include "I2CFormatter.h"
+#include "ConfigParser.h"
 
 #define LED_1 12
 #define LED_2 13
@@ -18,6 +19,22 @@ void onI2CData(const I2CTransaction &transaction)
   if (bleSerial.isConnected())
   {
     bleSerial.write(formattedData.c_str());
+  }
+}
+
+void onBLEConfig(const String& command) {
+  String response;
+  ConfigParser::CommandResult result = ConfigParser::parseCommand(
+    command, 
+    i2cListener.getAddressFilter(), 
+    response
+  );
+  
+  Serial.println("BLE Config: " + command);
+  Serial.println("Response: " + response);
+  
+  if (bleSerial.isConnected()) {
+    bleSerial.writeStatus(response);
   }
 }
 
@@ -61,10 +78,15 @@ void setup()
   }
 
   i2cListener.setDataCallback(onI2CData);
+  bleSerial.setConfigCallback(onBLEConfig);
 
   Serial.println("=== I2C BLE Logger Ready ===");
   Serial.println("Device name: I2C-BLE-Logger");
   Serial.println("I2C pins - SDA: GPIO4, SCL: GPIO5");
+  Serial.println("BLE Services:");
+  Serial.println("  - Serial: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+  Serial.println("  - Config: 12345678-1234-1234-1234-123456789ABC");
+  Serial.println("Send 'HELP' to config characteristic for commands.");
   Serial.println("Monitoring I2C bus...\n");
 }
 
@@ -84,7 +106,7 @@ void loop()
     static unsigned long lastHeartbeat = 0;
     if (millis() - lastHeartbeat > 10000)
     {
-      bleSerial.write("I2C Logger Active\n");
+      bleSerial.writeStatus("I2C Logger Active - " + String(millis() / 1000) + "s uptime");
       lastHeartbeat = millis();
     }
   }
