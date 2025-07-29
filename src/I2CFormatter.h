@@ -4,21 +4,26 @@
 #include "I2CListener.h"
 #include <String.h>
 
+enum I2CFormatterType {
+    Hex,
+    Binary,
+    Decimal
+};
+
 class I2CFormatter {
 private:
     static const size_t MAX_OUTPUT_SIZE = 256;
     char outputBuffer[MAX_OUTPUT_SIZE];
-    
+
 public:
     I2CFormatter();
-    String formatTransaction(const I2CTransaction& transaction);
-    String formatAsHex(const I2CTransaction& transaction);
-    String formatAsDecimal(const I2CTransaction& transaction);
+    String formatTransaction(const I2CTransaction& transaction, I2CFormatterType kind = I2CFormatterType::Binary);
     String formatTimestamp(unsigned long timestamp);
-    
+
 private:
     String byteToHex(uint8_t value);
-    void appendDataToString(String& str, const I2CTransaction& transaction, bool useHex = true);
+    String byteToBinary(uint8_t value);
+    void appendDataToString(String& str, const I2CTransaction& transaction, I2CFormatterType kind = I2CFormatterType::Hex);
 };
 
 #endif

@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "BLESerial.h"
 #include "I2CListener.h"
 #include "I2CFormatter.h"
@@ -99,22 +98,18 @@ void loop()
 {
   bleSerial.handleConnection();
 
-  static unsigned long lastScan = 0;
-  if (millis() - lastScan > 1000)
-  {
-    i2cListener.scanBus();
-    lastScan = millis();
-  }
+  // Process I2C data (passive listening - no bus scanning needed)
+  i2cListener.processI2C();
 
   if (bleSerial.isConnected())
   {
     static unsigned long lastHeartbeat = 0;
-    if (millis() - lastHeartbeat > 10000)
+    if (millis() - lastHeartbeat > 30000)  // Reduced heartbeat frequency
     {
-      bleSerial.writeStatus("I2C Logger Active - " + String(millis() / 1000) + "s uptime");
+      bleSerial.writeStatus("I2C Passive Sniffer Active - " + String(millis() / 1000) + "s uptime");
       lastHeartbeat = millis();
     }
   }
 
-  delay(50);
+  delay(10);  // Reduced delay for better I2C responsiveness
 }
