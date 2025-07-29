@@ -65,7 +65,7 @@ ConfigParser::CommandResult ConfigParser::parseAddressRange(const String& params
 }
 
 ConfigParser::CommandResult ConfigParser::parseListRanges(AddressFilter& filter, String& response) {
-    response = "Active address ranges:\\n";
+    response = "Active address ranges:\n";
     int count = filter.getRangeCount();
     
     if (count == 0) {
@@ -75,7 +75,7 @@ ConfigParser::CommandResult ConfigParser::parseListRanges(AddressFilter& filter,
             AddressRange range = filter.getRange(i);
             response += String(i) + ": 0x" + String(range.minAddress, HEX) + 
                        "-0x" + String(range.maxAddress, HEX) + 
-                       (range.enabled ? " (enabled)" : " (disabled)") + "\\n";
+                       (range.enabled ? " (enabled)" : " (disabled)") + "\n";
         }
     }
     
@@ -89,13 +89,13 @@ ConfigParser::CommandResult ConfigParser::parseClearRanges(AddressFilter& filter
 }
 
 ConfigParser::CommandResult ConfigParser::parseHelp(String& response) {
-    response = "I2C Address Filter Commands:\\n";
-    response += "ADD 0x08-0x77  - Add address range\\n";
-    response += "ADD 0x50       - Add single address\\n";
-    response += "LIST           - List current ranges\\n";
-    response += "CLEAR          - Clear all ranges\\n";
-    response += "HELP           - Show this help\\n";
-    response += "\\nExample: ADD 0x08-0x0F";
+    response = "I2C Address Filter Commands:\n";
+    response += "ADD 0x08-0x77  - Add address range\n";
+    response += "ADD 0x50       - Add single address\n";
+    response += "LIST           - List current ranges\n";
+    response += "CLEAR          - Clear all ranges\n";
+    response += "HELP           - Show this help\n";
+    response += "\nExample: ADD 0x08-0x0F";
     return SUCCESS;
 }
 

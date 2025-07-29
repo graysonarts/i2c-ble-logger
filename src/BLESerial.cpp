@@ -48,6 +48,13 @@ public:
         Serial.print("[BLE] Data: \"");
         Serial.print(value.c_str());
         Serial.println("\"");
+        Serial.print("[BLE] Raw bytes: ");
+        for (size_t i = 0; i < value.length(); i++) {
+            Serial.print("0x");
+            Serial.print((uint8_t)value[i], HEX);
+            Serial.print(" ");
+        }
+        Serial.println();
         
         if (value.length() > 0 && bleSerial->configCallback) {
             String command = String(value.c_str());

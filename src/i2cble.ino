@@ -22,31 +22,35 @@ void onI2CData(const I2CTransaction &transaction)
   }
 }
 
-void onBLEConfig(const String& command) {
+void onBLEConfig(const String &command)
+{
   String response;
   ConfigParser::CommandResult result = ConfigParser::parseCommand(
-    command, 
-    i2cListener.getAddressFilter(), 
-    response
-  );
-  
+      command,
+      i2cListener.getAddressFilter(),
+      response);
+
   Serial.println("BLE Config: " + command);
   Serial.println("Response: " + response);
-  
-  if (bleSerial.isConnected()) {
+
+  if (bleSerial.isConnected())
+  {
     bleSerial.writeStatus(response);
   }
 }
 
 void setup()
 {
+
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
   digitalWrite(LED_1, HIGH);
   digitalWrite(LED_2, HIGH);
   Serial.begin(115200);
   digitalWrite(LED_2, LOW);
-  while (!Serial)
+
+  unsigned long lastScan = millis();
+  while (!Serial && millis() - lastScan < 10000)
     ;
   digitalWrite(LED_1, LOW);
 
