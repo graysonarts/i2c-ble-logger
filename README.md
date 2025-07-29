@@ -62,28 +62,28 @@ cd i2c-ble-client
 
 Send commands to the Config service characteristic:
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `HELP` | Show available commands | `HELP` |
-| `ADD` | Add address range | `ADD 0x08-0x77` |
-| `LIST` | List active ranges | `LIST` |
-| `CLEAR` | Clear all ranges | `CLEAR` |
+| Command | Description             | Example         |
+| ------- | ----------------------- | --------------- |
+| `HELP`  | Show available commands | `HELP`          |
+| `ADD`   | Add address range       | `ADD 0x08-0x77` |
+| `LIST`  | List active ranges      | `LIST`          |
+| `CLEAR` | Clear all ranges        | `CLEAR`         |
 
 ## 🖥️ Rust TUI Client Controls
 
-| Key | Action |
-|-----|--------|
-| `q` | Quit application |
-| `c` | Enter command mode |
-| `Ctrl+C` | Emergency quit |
-| `↑/↓` | Scroll I2C data |
-| `PgUp/PgDn` | Fast scroll |
-| `Esc` | Exit command mode |
+| Key         | Action             |
+| ----------- | ------------------ |
+| `q`         | Quit application   |
+| `c`         | Enter command mode |
+| `Ctrl+C`    | Emergency quit     |
+| `↑/↓`       | Scroll I2C data    |
+| `PgUp/PgDn` | Fast scroll        |
+| `Esc`       | Exit command mode  |
 
 ## 🔍 I2C Data Format
 
 ```
-timestamp [0xADDRESS] READ/WRITE: data bytes
+timestamp [0xADDRESS] R/W: data bytes
 ```
 
 Example output:

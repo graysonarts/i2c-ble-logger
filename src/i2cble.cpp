@@ -67,7 +67,9 @@ void setup()
   Serial.println("✓ I2C initialized successfully");
 
   // Add delay before BLE initialization
+  digitalWrite(LED_2, HIGH);
   delay(1000);
+  digitalWrite(LED_2, LOW);
 
   // Initialize BLE with error handling
   Serial.println("Initializing BLE...");
